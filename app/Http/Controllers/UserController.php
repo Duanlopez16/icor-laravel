@@ -96,4 +96,29 @@ class UserController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * logout
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        try {
+
+            $user = \Illuminate\Support\Facades\Auth::user();
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+            return response()->json([
+                'status' => 'success',
+                'message' => 'session finalizada.',
+            ], 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $ex->getMessage(),
+            ], 404);
+        }
+    }
 }

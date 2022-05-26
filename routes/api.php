@@ -17,6 +17,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::controller(App\Http\Controllers\CityController::class)->group(function () {
         Route::get('/city', 'index');
     });
+
+    Route::controller(App\Http\Controllers\UserController::class)->group(function () {
+        Route::post('/logout', 'logout');
+    });
 });
 
 Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
