@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * venue
+ * city
  */
-class venue extends Model
+class city extends Model
 {
     use HasFactory;
 }
