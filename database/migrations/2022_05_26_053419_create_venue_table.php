@@ -19,7 +19,7 @@ class CreateVenueTable extends Migration
             $table->string('name', 245);
             $table->string('address', 254);
             $table->integer('phone');
-            $table->integer('city_id');
+            $table->integer('city_id')->index('city_id');
             $table->double('latitud');
             $table->double('longitud');
             $table->boolean('status')->nullable()->default(true);
