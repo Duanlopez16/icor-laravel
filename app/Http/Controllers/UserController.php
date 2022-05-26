@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,17 +65,15 @@ class UserController extends Controller
         //
     }
 
-    public function login(Request $request)
+    /**
+     * login
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function login(LoginRequest $request)
     {
         try {
-            $rules = array(
-                'email' => 'required|email',
-                'password' => 'required',
-            );
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return $validator->errors();
-            }
             $user = User::whereEmail($request->email)->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
@@ -82,7 +81,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Bienvenido al sistema',
-                    'token' => $token->token,
+                    'token' => $token,
                 ], 200);
             } else {
                 return response()->json([
@@ -93,7 +92,7 @@ class UserController extends Controller
         } catch (\Exception $ex) {
             return response()->json([
                 'status' => 'error',
-                'message' => $ex->getMessage(),
+                'message' => $ex->getMessage()
             ], 400);
         }
     }
