@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/city', [App\Http\Controllers\CityController::class, 'index']);
+
+Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
