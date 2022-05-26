@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * city
+ * City
  */
-class city extends Model
+class City extends Model
 {
+    /**
+     * table
+     *
+     * @var string
+     */
+    protected $table = 'city';
+
     use HasFactory;
 }

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use Illuminate\Http\Request;
 
+/**
+ * CityController
+ */
 class CityController extends Controller
 {
     /**
@@ -13,7 +17,19 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $cities = City::all();
+            return response()->json([
+                'status' => 'succces',
+                'message' => 'succces',
+                'data' => $cities,
+            ], 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $ex->getMessage(),
+            ], 200);
+        }
     }
 
     /**

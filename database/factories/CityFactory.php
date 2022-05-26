@@ -4,6 +4,9 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * CityFactory
+ */
 class CityFactory extends Factory
 {
     /**
