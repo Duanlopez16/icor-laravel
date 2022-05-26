@@ -14,7 +14,7 @@ class CreateDocumentTypeTable extends Migration
     public function up()
     {
         Schema::create('document_type', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id', true);
             $table->string('uuid', 36)->nullable();
             $table->string('name', 25);
             $table->boolean('status')->nullable()->default(true);
