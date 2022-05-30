@@ -54,4 +54,12 @@ class City extends Model
             // ... code here
         });
     }
+
+    /**
+     * Get the comments for the blog5 post.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

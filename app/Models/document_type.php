@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * document_type
  */
-class document_type extends Model
+class Document_type extends Model
 {
     use HasFactory;
 }

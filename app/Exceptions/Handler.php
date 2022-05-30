@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
             return response()->json(["status" => 'error', "message" => "Error de autenticación"], 401);
         }
         if ($exception instanceof HttpException) {
-            return response()->json(["status" => 'error', "message" => "Error de ruta"], 404);
+            return response()->json(["status" => 'error', "message" => "No se encontró la ruta."], 404);
         }
         if ($exception instanceof AuthorizationException) {
             return response()->json(["status" => 'error', "message" => "Error de autorización, no tiene permisos"], 403);

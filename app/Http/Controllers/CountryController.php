@@ -38,9 +38,9 @@ class CountryController extends Controller
      */
     public function get_countries_pag()
     {
-        $limit = request()->query('limit') ?? 10;
         $response_data = \App\Services\Utils::get_response('error', 'error');
         try {
+            $limit = request()->query('limit') ?? 10;
             $countries = \App\Models\Country::select('id', 'uuid', 'name')
                 ->OrderBy('name', 'desc')->paginate($limit);
             $response_data = \App\Services\Utils::get_response('success', 'success', $countries);
@@ -62,7 +62,8 @@ class CountryController extends Controller
         try {
             $country_data = \App\Models\Country::where('id', '=', $country_id)->first(['id', 'uuid', 'name']);
             if (!empty($country_data)) {
-                $country_data->cities->where('status', '=', 1);
+                $cities = $country_data->cities()->where('status', '=', 1)->get(['id', 'uuid', 'name', 'country_id']);
+                $country_data->cities = $cities;
                 $response_data = \App\Services\Utils::get_response('success', 'success', $country_data);
             } else {
                 $response_data = \App\Services\Utils::get_response('success', 'No encontramos el país ingresado.');
@@ -88,7 +89,8 @@ class CountryController extends Controller
             if ($response_validate->status) {
                 $country_data = \App\Models\Country::where('uuid', '=', $uuid)->where('status', '=', 1)->first(['id', 'uuid', 'name']);
                 if (!empty($country_data)) {
-                    $country_data->cities->where('status', '=', 1);
+                    $cities = $country_data->cities()->where('status', '=', 1)->get(['id', 'uuid', 'name', 'country_id']);
+                    $country_data->cities = $cities;
                     $response_data = \App\Services\Utils::get_response('succcess', 'success', $country_data);
                 } else {
                     $response_data = \App\Services\Utils::get_response('succcess', 'No encontramos el país ingresado.');
@@ -129,7 +131,7 @@ class CountryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $uuid
      * @return \Illuminate\Http\Response
      */
     public function update(\App\Http\Requests\CountryRequest $request, string $uuid)
