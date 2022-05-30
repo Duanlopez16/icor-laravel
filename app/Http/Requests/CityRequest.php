@@ -7,9 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
- * LoginRequest
+ * CityRequest
  */
-class LoginRequest extends FormRequest
+class CityRequest extends FormRequest
 {
     /**
      * failedValidation
@@ -21,6 +21,7 @@ class LoginRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json($validator->errors(), 400));
     }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -39,8 +40,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|min:6',
+            'name' => 'required|string|max:15',
+            'country_id' => 'required|int|max:15|exists:country,id'
         ];
     }
 }

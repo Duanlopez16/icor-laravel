@@ -18,12 +18,24 @@ class CityController extends Controller
     public function index()
     {
         try {
-            $cities = City::all();
-            return response()->json([
-                'status' => 'succces',
-                'message' => 'succces',
-                'data' => $cities,
-            ], 200);
+            $cities = City::where('status', '=', '1')
+                ->orderBy('name')
+                ->get();
+
+            if (!empty($cities->items)) {
+
+                return response()->json([
+                    'status' => 'succcess',
+                    'message' => 'succcess',
+                    'data' => $cities,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'succcess',
+                    'message' => 'No encontramos ciudades.',
+                    'data' => [],
+                ], 200);
+            }
         } catch (\Exception $ex) {
             return response()->json([
                 'status' => 'error',
@@ -38,9 +50,29 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(\App\Http\Requests\CityRequest $request)
     {
-        //
+        try {
+            $model = new \App\Models\City;
+            $model->name = $request->name;
+            if ($model->save()) {
+                return response()->json([
+                    'message' => 'Registro exitoso',
+                    'data' => $model
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Error al guardar el registro',
+                    'data' => false
+                ], 400);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $ex->getMessage(),
+                'data' => []
+            ], 400);
+        }
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 
+/**
+ * UserController
+ */
 class UserController extends Controller
 {
     /**
@@ -71,10 +71,10 @@ class UserController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function login(LoginRequest $request)
+    public function login(\App\Http\Requests\LoginRequest $request)
     {
         try {
-            $user = User::whereEmail($request->email)->first();
+            $user = \App\Models\User::whereEmail($request->email)->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel')->accessToken;
